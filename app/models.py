@@ -25,6 +25,7 @@ class Problem(BaseModel):
 
 class Language(BaseModel):
     name = models.CharField(max_length=20)
+    supported = models.BooleanField(default=False)
 
 class StandardCode(BaseModel):
     problem = models.ForeignKey(Problem)
