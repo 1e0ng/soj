@@ -23,9 +23,15 @@ class Problem(BaseModel):
     publish_at = models.DateTimeField(auto_now_add=True)
     editor = models.ForeignKey(User, null=True, blank=True)
 
+    def __str__(self):
+        return self.name
+
 class Language(BaseModel):
     name = models.CharField(max_length=20)
     supported = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
 
 class StandardCode(BaseModel):
     problem = models.ForeignKey(Problem)
@@ -35,6 +41,9 @@ class StandardCode(BaseModel):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '%s in %s by %s' % (self.problem, self.language, self.editor)
 
 class Submission(BaseModel):
     PENDING = 'p'
@@ -66,6 +75,10 @@ class Submission(BaseModel):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return '%s in %s by %s : %s' % (self.problem, self.language,
+                self.user, self.get_status_display())
+
 class TestCase(BaseModel):
     problem = models.ForeignKey(Problem)
     editor = models.ForeignKey(User)
@@ -74,6 +87,9 @@ class TestCase(BaseModel):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '%s by %s' % (self.problem, self.editor)
 
 class Profile(BaseModel):
     FEMALE = 'f'
@@ -90,9 +106,13 @@ class Profile(BaseModel):
     name = models.CharField(max_length=30)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES,
             default=UNKNOWN)
-    school = models.CharField(max_length=50)
+    school = models.CharField(max_length=50, default='')
+    company = models.CharField(max_length=50, default='')
     prefer_language = models.ForeignKey(Language)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return '%s, %s, %s, %s, %s, %s' % (self.user, self.name,
+                self.get_gender_display(), self.school, self.company)
