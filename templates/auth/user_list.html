@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Rank</h2>
+    <ul>
+        {% for user in object_list %}
+            <li>{{ user.profile.name }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

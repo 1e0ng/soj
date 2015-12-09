@@ -114,5 +114,5 @@ class Profile(BaseModel):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return '%s, %s, %s, %s, %s, %s' % (self.user, self.name,
+        return '%s, %s, %s, %s, %s' % (self.user, self.name,
                 self.get_gender_display(), self.school, self.company)
